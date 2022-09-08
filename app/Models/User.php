@@ -60,6 +60,10 @@ class User extends Authenticatable
         .$integerToUse
         .'.png';
     }
+
+    public function votes() {
+        return $this->belongsToMany(Idea::class, 'votes');
+    }
 }
 
 
