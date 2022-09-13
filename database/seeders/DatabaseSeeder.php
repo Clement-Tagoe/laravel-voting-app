@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
         Status::factory()->create(['name' => 'Open', 'classes' => 'bg-gray-200']);
         Status::factory()->create(['name' => 'Considering', 'classes' => 'bg-purple-700 text-white']);
-        Status::factory()->create(['name' => 'In Progress', 'classes' => 'bg-yellow-400 text-white']);
+        Status::factory()->create(['name' => 'In Progress', 'classes' => 'bg-yellow-500 text-white']);
         Status::factory()->create(['name' => 'Implemented', 'classes' => 'bg-green-600 text-white']);
         Status::factory()->create(['name' => 'Closed', 'classes' => 'bg-red-600 text-white']);
 

@@ -48,11 +48,11 @@ class ShowIdeasTest extends TestCase
         $response->assertSee($ideaOne->title);
         $response->assertSee($ideaOne->description);
         $response->assertSee($categoryOne->name);
-        $response->assertSee('<div class="bg-gray-200 text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>', false);
+        $response->assertSee('<div class="text-xxs bg-gray-200 font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Open</div>', false);
         $response->assertSee($ideaTwo->title);
         $response->assertSee($ideaTwo->description);
         $response->assertSee($categoryTwo->name);
-        $response->assertSee('<div class="bg-purple-700 text-white text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Considering</div>', false);
+        $response->assertSee('<div class="text-xxs bg-purple-700 text-white font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Considering</div>', false);
         
     }
 

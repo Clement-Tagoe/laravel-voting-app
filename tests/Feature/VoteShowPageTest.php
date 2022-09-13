@@ -119,14 +119,12 @@ class VoteShowPageTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        /** @var \App\Models\User $user **/
-        $response = $this->actingAs($user)->get(route('idea.index'));
-
-        $ideaWithVotes = $response['ideas']->items()[0];
+        $idea->votes_count = 1;
+        $idea->voted_by_user = 1;
 
         Livewire::actingAs($user)
-            ->test(IdeaIndex::class, [
-            'idea' => $ideaWithVotes,
+            ->test(IdeaShow::class, [
+            'idea' => $idea,
             'votesCount' => 5,
         ])
 

@@ -10,6 +10,7 @@ use App\Models\Status;
 use Livewire\Livewire;
 use App\Models\Category;
 use App\Http\Livewire\IdeaIndex;
+use App\Http\Livewire\IdeasIndex;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -38,7 +39,7 @@ class VoteIndexPageTest extends TestCase
     }
 
     /** @test */
-    public function index_page_correctly_receives_votes_count() {
+    public function ideas_index_livewire_component_correctly_receives_votes_count() {
 
         $user = User::factory()->create();
         $userB = User::factory()->create();
@@ -65,10 +66,12 @@ class VoteIndexPageTest extends TestCase
             'user_id' => $userB->id,
         ]);
 
-        $this->get(route('idea.index'))
+
+        Livewire::test(IdeasIndex::class)
             ->assertViewHas('ideas', function ($ideas) {
-                return $ideas->first()->votes_count == 2;
-            });
+            return $ideas->first()->votes_count == 2;
+        });
+
     }
 
     /** @test */
@@ -122,6 +125,41 @@ class VoteIndexPageTest extends TestCase
 
         ->call('vote')
         ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function user_who_is_logged_in_shows_voted_if_idea_already_voted_for() {
+
+        $user = User::factory()->create();
+        
+        $categoryOne = Category::factory()->create(['name' => 'Category 1']);
+        
+        $statusOpen = Status::factory()->create(['name' => 'Open', 'classes' => 'bg-gray-200']);
+
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+            'title' => 'My First Idea',
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusOpen->id,
+            'description' => 'Description of my first idea'
+        ]);
+
+        Vote::factory()->create([
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+
+        $idea->votes_count = 1;
+        $idea->voted_by_user = 1;
+
+        Livewire::actingAs($user)
+            ->test(IdeaIndex::class, [
+            'idea' => $idea,
+            'votesCount' => 5,
+        ])
+
+        ->assertSet('hasVoted', true)
+        ->assertSee('Voted');
     }
 
     /** @test */
