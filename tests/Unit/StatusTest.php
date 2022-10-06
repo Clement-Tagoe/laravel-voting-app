@@ -2,11 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+
 use App\Models\Idea;
-use App\Models\User;
 use App\Models\Status;
 use App\Models\Category;
+use Tests\TestCase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StatusTest extends TestCase

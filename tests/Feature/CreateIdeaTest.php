@@ -27,8 +27,10 @@ class CreateIdeaTest extends TestCase
 
    /** @test */
    public function create_idea_form_does_not_show_when_logged_in() {
-
-    $response = $this->actingAs(User::factory()->create())->get(route('idea.index'));
+    $user = User::factory()->create();
+    
+    /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+    $response = $this->actingAs($user)->get(route('idea.index'));
 
     $response->assertSuccessful();
     $response->assertDontSee('Please login to create an idea.');
@@ -37,8 +39,10 @@ class CreateIdeaTest extends TestCase
 
     /** @test */
     public function main_page_contains_create_idea_livewire_component() {
-
-        $this->actingAs(User::factory()->create())
+        $user = User::factory()->create();
+        
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $this->actingAs($user)
             ->get(route('idea.index'))
             ->assertSeeLivewire('create-idea');
     }
@@ -72,12 +76,19 @@ class CreateIdeaTest extends TestCase
             ->call('createIdea')
             ->assertRedirect('/');
 
-        $response = $this->actingAs(User::factory()->create())->get(route('idea.index'));
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        $response = $this->actingAs($user)->get(route('idea.index'));
         $response->assertSuccessful();
         $response->assertSee('My First Idea');
         $response->assertSee('This is my first idea');
+
         $this->assertDatabaseHas('ideas', [
             'title' => 'My First Idea'
+        ]);
+
+        $this->assertDatabaseHas('votes', [
+            'idea_id' => 1,
+            'user_id' => 1,
         ]);
     }
 

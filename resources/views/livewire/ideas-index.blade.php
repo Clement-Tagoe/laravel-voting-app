@@ -10,11 +10,10 @@
         </div>
 
         <div class="w-full md:w-1/3">
-            <select name="other_filters" id="other_filters" class="w-full rounded-xl border-none px-4 py-2">
-                <option value="Filter One">Filter One</option>
-                <option value="Filter Two">Filter Two</option>
-                <option value="Filter Three">Filter Three</option>
-                <option value="Filter Four">Filter Four</option>
+            <select wire:model="filter" name="other_filters" id="other_filters" class="w-full rounded-xl border-none px-4 py-2">
+                <option value="No Filter">No Filter</option>
+                <option value="Top Voted">Top Voted</option>
+                <option value="My Ideas">My Ideas</option>
             </select>
         </div>
 
@@ -24,19 +23,26 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </div> 
-            <input type="search" placeholder="Find an idea" class="w-full placeholder-gray-900 rounded-xl bg-white border-none px-4 py-2 pl-8">
+            <input wire:model="search" type="search" placeholder="Find an idea" class="w-full placeholder-gray-900 rounded-xl bg-white border-none px-4 py-2 pl-8">
         </div>
     </div>
     {{-- end filters --}}
 
     <div class="ideas-container space-y-6 my-6">
-        @foreach ($ideas as $idea)
+        @forelse ($ideas as $idea)
             <livewire:idea-index 
                 :key="$idea->id"
                 :idea="$idea"
                 :votesCount="$idea->votes_count"
             />
-        @endforeach
+        @empty
+            <div class="mx-auto w-70 mt-12">
+                <img src="{{asset('images/no-ideas.svg')}}" alt="No Ideas" class="mx-auto mix-blend-luminosity">
+                <div class="text-gray-400 text-center font-bold mt-6">
+                    No ideas were found...
+                </div>
+            </div>
+        @endforelse
         
     </div>
 

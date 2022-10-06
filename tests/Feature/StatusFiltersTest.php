@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Status;
 use Livewire\Livewire;
 use App\Models\Category;
+use App\Http\Livewire\IdeasIndex;
 use App\Http\Livewire\StatusFilters;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -128,10 +129,17 @@ class StatusFiltersTest extends TestCase
             'status_id' => $statusInProgress->id,
         ]);
 
-        $response = $this->get(route('idea.index', ['status' => 'In Progress']));
-        $response->assertSuccessful();
-        $response->assertSee('<div class="text-xxs bg-yellow-500 text-white font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">In Progress</div>', false);
-        $response->assertDontSee('<div class="text-xxs bg-purple-700 text-white font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Considering</div>', false);
+        //$response = $this->get(route('idea.index', ['status' => 'In Progress']));
+        //$response->assertSuccessful();
+        //$response->assertSee('<div class="text-xxs bg-yellow-500 text-white font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">In Progress</div>', false);
+        //$response->assertDontSee('<div class="text-xxs bg-purple-700 text-white font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">Considering</div>', false);
+
+        Livewire::withQueryParams(['status' => 'In Progress'])
+            ->test(IdeasIndex::class)
+            ->assertViewHas('ideas', function ($ideas) {
+                return $ideas->count() === 3
+                    && $ideas->first()->status->name === 'In Progress';
+            });
     }
 
     /** @test */
