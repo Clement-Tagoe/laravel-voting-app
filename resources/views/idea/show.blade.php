@@ -14,7 +14,15 @@
         <livewire:edit-idea :idea="$idea"/>
     @endcan
     
-    <livewire:delete-idea :idea="$idea"/>
+    @can('delete', $idea)
+        <livewire:delete-idea :idea="$idea"/>
+    @endcan
+    @auth
+        <livewire:mark-idea-as-spam :idea="$idea"/>
+    @endauth
+    @auth
+        <livewire:mark-idea-as-not-spam :idea="$idea"/>
+    @endauth
 
     <div class="comments-container relative md:ml-22 mt-1 pt-4 space-y-6 my-8">
         <div class="comment-container relative mt-4 bg-white rounded-xl flex">
@@ -53,7 +61,7 @@
                                     @keydown.escape.window="isOpen = false"
                                     class="absolute w-36 md:ml-8 top-8 md:top-6 right-0 md:left-0 z-10 shadow-md text-left text-gray-900 font-semibold bg-white shadow-lg rounded-xl py-3">
                                     <li><a href="#" class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Mark as Spam</a></li>
-                                    <li><a href="#" class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Delete Post</a></li>
+                                    <li><a href="#" class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3">Delete Idea</a></li>
                                 </ul>
                             </div>
                         </div>

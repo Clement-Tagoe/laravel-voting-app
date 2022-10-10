@@ -37,6 +37,7 @@ class AdminSetStatusTest extends TestCase
             'description' => 'Description of my first idea'
         ]);
 
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
         $this->actingAs($user)
             ->get(route('idea.show', $idea))
             ->assertSeeLivewire('set-status');
@@ -63,6 +64,7 @@ class AdminSetStatusTest extends TestCase
             'description' => 'Description of my first idea'
         ]);
 
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
         $this->actingAs($user)
             ->get(route('idea.show', $idea))
             ->assertDontSeeLivewire('set-status');
