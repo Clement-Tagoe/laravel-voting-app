@@ -55,7 +55,7 @@
                     <div>&bull;</div>
                     <div>{{$idea->category->name}}</div>
                     <div>&bull;</div>
-                    <div class="text-gray-700">3 Comments</div>
+                    <div class="text-gray-700">{{$idea->comments_count . ' comment(s)'}}</div>
                 </div>
                 <div x-data="{ isOpen: false }" class="flex items-center space-x-2 mt-4 md:mt-0">
                     <div class="text-xxs {{$idea->status->classes}} font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{$idea->status->name}}</div>
