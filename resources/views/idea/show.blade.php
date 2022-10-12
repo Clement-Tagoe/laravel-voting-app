@@ -10,19 +10,9 @@
 
     <livewire:idea-show :idea="$idea" :votesCount="$votesCount" />
 
-    @can('update', $idea)
-        <livewire:edit-idea :idea="$idea"/>
-    @endcan
-    
-    @can('delete', $idea)
-        <livewire:delete-idea :idea="$idea"/>
-    @endcan
-    @auth
-        <livewire:mark-idea-as-spam :idea="$idea"/>
-    @endauth
-    @auth
-        <livewire:mark-idea-as-not-spam :idea="$idea"/>
-    @endauth
+    <x-notification-success />
+
+   <x-modals-container :idea="$idea" />
 
     <div class="comments-container relative md:ml-22 mt-1 pt-4 space-y-6 my-8">
         <div class="comment-container relative mt-4 bg-white rounded-xl flex">

@@ -34,7 +34,7 @@
     </div>
 
     <div>
-        @if(session('success_message'))
+        {{-- @if(session('success_message'))
             <div 
                 x-data="{isVisible: true}"
                 x-init="setTimeout(()=> {isVisible = false}, 5000)"
@@ -42,6 +42,6 @@
                 class="text-green-700 mt-4">
                 {{session('success_message')}}
             </div>
-        @endif
+        @endif --}}
     </div>
  </form>
