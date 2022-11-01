@@ -1,4 +1,5 @@
 <div class="idea-and-buttons container"> 
+    
     <div class="idea-container mt-4 bg-white rounded-xl flex">
         <div class="flex flex-col md:flex-row flex-1 px-4 py-6">
             <div class="flex-none mx-4">
@@ -27,10 +28,10 @@
                         <div>&bull;</div>
                         <div>{{$idea->category->name}}</div>
                         <div>&bull;</div>
-                        <div class="text-gray-700">{{$idea->comments_count . ' comment(s)'}}</div>
+                        <div class="text-gray-700">{{$idea->comments()->count() . ' comment(s)'}}</div>
                     </div>
                     <div x-data="{ isOpen: false }" class="flex items-center space-x-2 mt-4 md:mt-0">
-                        <div class="{{$idea->status->classes}} text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{$idea->status->name}}</div>
+                        <div class="{{ 'status-'.Str::kebab($idea->status->name) }} text-xxs font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{$idea->status->name}}</div>
                         @auth
                             <div class="relative">
                                 <button @click="isOpen = !isOpen" class="relative bg-gray-100 text-gray-400 hover:bg-gray-200 border border-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3 flex">
@@ -48,7 +49,7 @@
                                     <li>
                                         <a  
                                             href="#" class="hover:bg-gray-100 block transition duration-150 ease-in px-5 py-3"
-                                            @click="
+                                            @click.prevent="
                                                 isOpen = false
                                                 $dispatch('custom-show-edit-modal')
                                             "

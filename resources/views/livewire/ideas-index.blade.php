@@ -16,6 +16,7 @@
                 <option value="My Ideas">My Ideas</option>
                 @admin
                     <option value="Spam Ideas">Spam Ideas</option>
+                    <option value="Spam Comments">Spam Comments</option>
                 @endadmin
             </select>
         </div>
@@ -30,7 +31,6 @@
         </div>
     </div>
     {{-- end filters --}}
-
     <div class="ideas-container space-y-6 my-6">
         @forelse ($ideas as $idea)
             <livewire:idea-index 
@@ -50,7 +50,7 @@
     </div>
 
     <div class="py-6">
-        {{-- {{$ideas->links()}} --}}
-        {{$ideas->appends(request()->query())->links()}}
+        {{$ideas->links()}}
+        {{-- {{$ideas->appends(request()->query())->links()}} --}}
     </div>
 </div>

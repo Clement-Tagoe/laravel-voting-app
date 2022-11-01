@@ -3,10 +3,46 @@
      Livewire.on('commentWasAdded', () => {
          isOpen = false
      })
+
+     Livewire.hook('message.processed', (message, component) => {
+        {{-- Pagination --}}
+        if (['gotoPage', 'previousPage', 'nextPage'].includes(message.updateQueue[0].method)) {
+            const firstComment = document.querySelector('.comment-container:first-child')
+            firstComment.scrollIntoView({ behavior: 'smooth'})
+        }
+        
+        {{-- Adding Comment --}}
+        if (['commentWasAdded', 'statusWasUpdated'].includes(message.updateQueue[0].payload.event)
+         && message.component.fingerprint.name === 'idea-comments') {
+            const lastComment = document.querySelector('.comment-container:last-child')
+            lastComment.scrollIntoView({ behavior: 'smooth'})
+            lastComment.classList.add('bg-green-200')
+            setTimeout(() => {
+                lastComment.classList.remove('bg-green-200')
+            }, 5000)
+        }
+    })
+
+    @if(session('scrollToComment'))
+        const commentToScrollTo = document.querySelector('#comment-{{session('scrollToComment')}}')
+        commentToScrollTo.scrollIntoView({ behavior: 'smooth'})
+        commentToScrollTo.classList.add('bg-green-200')
+        setTimeout(() => {
+            commentToScrollTo.classList.remove('bg-green-200')
+        }, 5000)
+    @endif
   "
      class="relative"
 >
-    <button @click="isOpen = !isOpen" type="button" class="flex items-center w-32 justify-center h-11 text-sm font-semibold rounded-xl border border-blue-600 bg-blue-600 text-white hover:bg-blue-500 transition duration-150 ease-in px-6 py-3">
+    <button @click="
+            isOpen = !isOpen 
+            if (isOpen) {
+            $nextTick(() => $refs.comment.focus())
+            }
+            "
+
+            type="button" 
+            class="flex items-center w-32 justify-center h-11 text-sm font-semibold rounded-xl border border-blue-600 bg-blue-600 text-white hover:bg-blue-500 transition duration-150 ease-in px-6 py-3">
         Reply
     </button>
     <div 
@@ -20,7 +56,7 @@
         @auth
         <form wire:submit.prevent="addComment" action="#" class="space-y-4 px-4 py-6">
             <div>
-                <textarea wire:model="comment" name="post_comment" id="post_comment" cols="30" rows="4"
+                <textarea x-ref="comment" wire:model="comment" name="post_comment" id="post_comment" cols="30" rows="4"
                 class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2" placeholder="Go ahead, don't be shy. Share your thoughts..." required></textarea>
 
                 @error('comment')

@@ -55,10 +55,10 @@
                     <div>&bull;</div>
                     <div>{{$idea->category->name}}</div>
                     <div>&bull;</div>
-                    <div class="text-gray-700">{{$idea->comments_count . ' comment(s)'}}</div>
+                    <div wire:ignore class="text-gray-700">{{$idea->comments_count . ' comment(s)'}}</div>
                 </div>
                 <div x-data="{ isOpen: false }" class="flex items-center space-x-2 mt-4 md:mt-0">
-                    <div class="text-xxs {{$idea->status->classes}} font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{$idea->status->name}}</div>
+                    <div class="text-xxs {{'status-'.Str::kebab($idea->status->name)}} font-bold uppercase leading-none rounded-full text-center w-28 h-7 py-2 px-4">{{$idea->status->name}}</div>
                     {{-- <button @click="isOpen = !isOpen" class="relative bg-gray-100 text-gray-400 hover:bg-gray-200 border border-gray-200 rounded-full h-7 transition duration-150 ease-in py-2 px-3 flex">
                         <svg class="h-6 w-6 self-center" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />

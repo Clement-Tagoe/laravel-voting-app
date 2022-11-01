@@ -1,4 +1,5 @@
 @props([
+    'type' => 'success',
     'redirect' => false,
     'messageToDisplay' => '',
 ])
@@ -39,6 +40,23 @@
         Livewire.on('commentWasAdded', message => {
             showNotification(message)
         })
+
+        Livewire.on('commentWasUpdated', message => {
+            showNotification(message)
+        })
+
+        Livewire.on('commentWasDeleted', message => {
+            showNotification(message)
+        })
+
+        Livewire.on('commentWasMarkedAsSpam', message => {
+            showNotification(message)
+        })
+
+        Livewire.on('commentWasMarkedAsNotSpam', message => {
+            showNotification(message)
+        })
+
     @endif
     "
     x-show="isOpen"
@@ -52,9 +70,17 @@
     
     class="z-20 flex justify-between max-w-xs sm:max-w-sm w-full fixed bottom-0 right-0 bg-white rounded-xl shadow-lg border px-4 py-5 mx-2 sm:mx-6 my-8">
     <div class="flex items-center">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-green-600 w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+        @if ($type === 'success')
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-green-600 w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>    
+        @endif
+
+        @if ($type === 'error')
+            <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-600 w-6 h-6">
+                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
+            </svg>            
+        @endif
         <div class="font-semibold text-gray-500 text-sm sm:text-base ml-2" x-text="messageToDisplay"></div> 
     </div> 
     <button @click="isOpen = false" class="text-gray-400 hover:text-gray-500">
