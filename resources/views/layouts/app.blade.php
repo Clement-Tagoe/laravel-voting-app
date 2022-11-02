@@ -5,7 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Voting App</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('images/apple-touch-icon.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/favicon-16x16.png')}}">
+        <link rel="manifest" href="/site.webmanifest">
+
+        <title>{{ $title ?? 'Voting App' }}</title>
 
         @livewireStyles
 
@@ -42,9 +47,11 @@
                     @endauth
                 </div>
             @endif
+            @auth
                 <a href="#">
-                    <img src="{{asset('images/avatar.jpg')}}" alt="avatar" class="w-10 h-10 rounded-full">
+                    <img src="{{ auth()->user()->getAvatar() }}" alt="avatar" class="w-10 h-10 rounded-full">
                 </a>
+            @endauth
             </div>
         </header>
 
@@ -66,19 +73,7 @@
                         @endauth
                     </p>
                  </div>
-
-                 @auth
                     <livewire:create-idea />
-                 @else
-                    <div class="my-6 text-center">
-                        <a href="{{route('login')}}" class="inline-block justify-center w-1/2 h-11 text-xs font-semibold rounded-xl border border-blue-600 bg-blue-600 text-white hover:bg-blue-500 transition duration-150 ease-in px-6 py-3">
-                            Login
-                        </a>
-                        <a href="{{route('register')}}"class="inline-block justify-center w-1/2 h-11 text-xs bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-3 mt-3">
-                            Sign Up
-                        </a>
-                    </div>
-                 @endauth
                </div> 
             </div>
             <div class="w-full md:w-175">
